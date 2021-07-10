@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <style>
+        .main {
+            text-align: center;
+        }
+
+        img {
+            height: 150px;
+            width: 150px;
+            border: 4px solid royalblue;
+        }
+
+        h2 {
+            color: rgba(202, 6, 6, 0.986);
+        }
+
+        #bio {
+            font-family: 'Ubuntu', sans-serif;
+        }
+
+        #followersInformation {
+            font-style: italic;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loading">
+        loading...
+    </div>
+    <div class="main" id="maincontainer" hidden>
+
+        <img id="profileImage">
+        <h2 id="fullname"></h2>
+        <p id="bio"></p>
+        <p id="followersInformation"></p>
+        <p>
+            Check me on <a id="githublink" target="_blank">Github</a>
+        </p>
+
+    </div>
+    <script>
+        fetch("https://api.github.com/users/gaurav-shrestha")
+            .then(response => response.json())
+            .then(function (data) {
+                console.log(data)
+                let followersCount = data["followers"]
+                let followersInfo = `I have been followed by ${followersCount} people in Github.`
+                document.getElementById("profileImage").src = data["avatar_url"]
+                document.getElementById("fullname").textContent = data["name"]
+                document.getElementById("bio").textContent = data["bio"]
+                document.getElementById("followersInformation").textContent = followersInfo
+                document.getElementById("githublink").href = data["html_url"]
+                document.getElementById("maincontainer").hidden = false
+                document.getElementById("loading").hidden = true
+            })
+    </script>
+
+</body>
+
+</html>
